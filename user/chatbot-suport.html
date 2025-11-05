@@ -1,0 +1,332 @@
+<!DOCTYPE html>
+<html lang="vi">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Chatbot Hỗ Trợ - Petcare</title>
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="../../css/chatbot.css" />
+  </head>
+  <body>
+    <div class="promo-banner position-relative text-center text-white">
+      <img
+        src="/assets/images/banner.png"
+        alt="Banner Chatbot"
+        class="img-fluid w-100 banner-img"
+      />
+      <div
+        class="banner-overlay position-absolute top-50 start-50 translate-middle"
+      >
+        <h1 class="fw-bold">CHATBOT HỖ TRỢ</h1>
+        <nav class="mt-3">
+          <a
+            href="../home.html"
+            class="text-white text-decoration-none fw-light"
+            >TRANG CHỦ</a
+          >
+          <span class="mx-2">•</span>
+          <span class="text-white fw-light">CHATBOT</span>
+        </nav>
+      </div>
+    </div>
+
+    <div class="container chatbot-main-container py-5">
+      <div class="row justify-content-center">
+        <div class="col-lg-10">
+          <div class="chatbot-interface">
+            <div class="chat-header">
+              <div class="bot-avatar">
+                <img
+                  src="/assets/images/chatbot-avatar.png"
+                  alt="Petcare Bot"
+                  onerror="this.src='data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNDAiIGhlaWdodD0iNDAiIGZpbGw9IiNmZmYiIHZpZXdCb3g9IjAgMCAyNCAyNCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cGF0aCBkPSJNMTIgMmM1LjUgMCAxMCA0LjUgMTAgMTBzLTQuNSAxMC0xMCAxMFMyIDcuNSAyIDJTNi41IDIgMTIgMnoiLz48L3N2Zz4='"
+                />
+              </div>
+              <div class="bot-info">
+                <h4 class="bot-name">Petcare Assistant</h4>
+                <p class="bot-status">
+                  <span class="status-dot"></span>
+                  Trực tuyến - Sẵn sàng hỗ trợ
+                </p>
+              </div>
+              <div class="chat-actions">
+                <button
+                  class="btn btn-sm btn-outline-light"
+                  onclick="clearChat()"
+                  title="Xóa cuộc trò chuyện"
+                >
+                  <i class="fas fa-trash"></i>
+                </button>
+                <button
+                  class="btn btn-sm btn-outline-light"
+                  onclick="toggleChatSettings()"
+                  title="Cài đặt"
+                >
+                  <i class="fas fa-cog"></i>
+                </button>
+              </div>
+            </div>
+
+            <div class="quick-actions">
+              <div
+                class="quick-action-item"
+                onclick="sendQuickMessage('Xin chào')"
+              >
+                <i class="fas fa-hand-wave"></i>
+                <span>Xin chào</span>
+              </div>
+              <div
+                class="quick-action-item"
+                onclick="sendQuickMessage('Đặt lịch khám')"
+              >
+                <i class="fas fa-calendar-plus"></i>
+                <span>Đặt lịch</span>
+              </div>
+              <div
+                class="quick-action-item"
+                onclick="sendQuickMessage('Giá dịch vụ')"
+              >
+                <i class="fas fa-money-bill"></i>
+                <span>Giá cả</span>
+              </div>
+              <div
+                class="quick-action-item"
+                onclick="sendQuickMessage('Giờ làm việc')"
+              >
+                <i class="fas fa-clock"></i>
+                <span>Giờ mở cửa</span>
+              </div>
+            </div>
+
+            <div class="chat-messages" id="chatMessages">
+              <div class="message bot-message">
+                <div class="message-avatar">
+                  <img
+                    src="/assets/images/chatbot-avatar.png"
+                    alt="Bot"
+                    onerror="this.src='data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMzAiIGhlaWdodD0iMzAiIGZpbGw9IiM0ZTg1ZmQiIHZpZXdCb3g9IjAgMCAyNCAyNCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cGF0aCBkPSJNMTIgMmM1LjUgMCAxMCA0LjUgMTAgMTBzLTQuNSAxMC0xMCAxMFMyIDcuNSAyIDE3UzYuNSAyIDEyIDJ6Ii8+PC9zdmc+'"
+                  />
+                </div>
+                <div class="message-content">
+                  <div class="message-bubble bot-bubble">
+                    <div class="typing-indicator">
+                      <span></span>
+                      <span></span>
+                      <span></span>
+                    </div>
+                  </div>
+                  <div class="message-time">Vừa xong</div>
+                </div>
+              </div>
+            </div>
+
+            <div class="suggested-questions" id="suggestedQuestions">
+              <h6>Câu hỏi thường gặp:</h6>
+              <div class="suggestion-chips">
+                <span
+                  class="chip"
+                  onclick="sendSuggestion('Petcare có những dịch vụ gì?')"
+                  >Dịch vụ của Petcare</span
+                >
+                <span
+                  class="chip"
+                  onclick="sendSuggestion('Làm thế nào để đặt lịch khám?')"
+                  >Cách đặt lịch</span
+                >
+                <span
+                  class="chip"
+                  onclick="sendSuggestion('Chi phí khám bệnh là bao nhiêu?')"
+                  >Chi phí dịch vụ</span
+                >
+                <span
+                  class="chip"
+                  onclick="sendSuggestion('Petcare có mấy chi nhánh?')"
+                  >Địa chỉ chi nhánh</span
+                >
+                <span
+                  class="chip"
+                  onclick="sendSuggestion('Giờ làm việc của Petcare')"
+                  >Giờ hoạt động</span
+                >
+              </div>
+            </div>
+
+            <div class="chat-input-container">
+              <div class="chat-input-wrapper">
+                <button
+                  class="btn btn-attachment"
+                  onclick="showAttachmentOptions()"
+                  title="Đính kèm"
+                >
+                  <i class="fas fa-paperclip"></i>
+                </button>
+                <input
+                  type="text"
+                  id="messageInput"
+                  class="chat-input"
+                  placeholder="Nhập tin nhắn của bạn..."
+                  onkeypress="handleKeyPress(event)"
+                />
+                <button
+                  class="btn btn-emoji"
+                  onclick="showEmojiPicker()"
+                  title="Biểu tượng cảm xúc"
+                >
+                  <i class="fas fa-smile"></i>
+                </button>
+                <button
+                  class="btn btn-send"
+                  onclick="sendMessage()"
+                  title="Gửi tin nhắn"
+                >
+                  <i class="fas fa-paper-plane"></i>
+                </button>
+              </div>
+              <div class="input-suggestions" id="inputSuggestions"></div>
+            </div>
+          </div>
+
+          <div class="chat-features">
+            <div class="feature-card">
+              <div class="feature-icon">
+                <i class="fas fa-robot"></i>
+              </div>
+              <h5>AI Thông minh</h5>
+              <p>
+                Chatbot được trang bị AI hiện đại, hiểu và phản hồi chính xác
+                các câu hỏi của bạn.
+              </p>
+            </div>
+
+            <div class="feature-card">
+              <div class="feature-icon">
+                <i class="fas fa-clock"></i>
+              </div>
+              <h5>Hỗ trợ 24/7</h5>
+              <p>
+                Luôn sẵn sàng hỗ trợ bạn mọi lúc, mọi nơi, ngay cả ngoài giờ làm
+                việc.
+              </p>
+            </div>
+
+            <div class="feature-card">
+              <div class="feature-icon">
+                <i class="fas fa-bolt"></i>
+              </div>
+              <h5>Phản hồi nhanh</h5>
+              <p>
+                Nhận được câu trả lời tức thì cho các thắc mắc về dịch vụ chăm
+                sóc thú cưng.
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="faq-section py-5 bg-light">
+      <div class="container">
+        <h2 class="text-center mb-5">Câu hỏi thường gặp</h2>
+        <div class="row">
+          <div class="col-lg-8 mx-auto">
+            <div class="accordion" id="faqAccordion">
+              <div class="accordion-item">
+                <h2 class="accordion-header">
+                  <button
+                    class="accordion-button"
+                    type="button"
+                    data-bs-toggle="collapse"
+                    data-bs-target="#faq1"
+                  >
+                    Petcare cung cấp những dịch vụ gì?
+                  </button>
+                </h2>
+                <div
+                  id="faq1"
+                  class="accordion-collapse collapse show"
+                  data-bs-parent="#faqAccordion"
+                >
+                  <div class="accordion-body">
+                    Petcare cung cấp đầy đủ các dịch vụ chăm sóc thú cưng: khám
+                    bệnh, điều trị, phẫu thuật, tiêm phòng, spa grooming, cắt
+                    tỉa lông, và nhiều dịch vụ khác.
+                  </div>
+                </div>
+              </div>
+
+              <div class="accordion-item">
+                <h2 class="accordion-header">
+                  <button
+                    class="accordion-button collapsed"
+                    type="button"
+                    data-bs-toggle="collapse"
+                    data-bs-target="#faq2"
+                  >
+                    Làm thế nào để đặt lịch khám cho thú cưng?
+                  </button>
+                </h2>
+                <div
+                  id="faq2"
+                  class="accordion-collapse collapse"
+                  data-bs-parent="#faqAccordion"
+                >
+                  <div class="accordion-body">
+                    Bạn có thể đặt lịch qua website, gọi điện trực tiếp, hoặc sử
+                    dụng chatbot. Chỉ cần cung cấp thông tin thú cưng và chọn
+                    thời gian phù hợp.
+                  </div>
+                </div>
+              </div>
+
+              <div class="accordion-item">
+                <h2 class="accordion-header">
+                  <button
+                    class="accordion-button collapsed"
+                    type="button"
+                    data-bs-toggle="collapse"
+                    data-bs-target="#faq3"
+                  >
+                    Chi phí các dịch vụ như thế nào?
+                  </button>
+                </h2>
+                <div
+                  id="faq3"
+                  class="accordion-collapse collapse"
+                  data-bs-parent="#faqAccordion"
+                >
+                  <div class="accordion-body">
+                    Chi phí phụ thuộc vào từng dịch vụ cụ thể. Khám cơ bản từ
+                    200.000đ, spa grooming từ 150.000đ. Liên hệ để được tư vấn
+                    chi tiết.
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div id="footer"></div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="../../js/chatbot-ai.js"></script>
+    <script>
+      // Load footer
+      fetch("../../components/footer.html")
+        .then((response) => response.text())
+        .then((data) => (document.getElementById("footer").innerHTML = data));
+    </script>
+  </body>
+</html>
